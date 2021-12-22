@@ -143,6 +143,14 @@ class QuestionController extends AbstractController
         // @todo Seul l'utilisateur de la question doit pouvoir la modifier
         // ainsi que les ADMIN ou MODERATOR
 
+
+        $this->denyAccessUnlessGranted('edit', $question);
+        /*
+        $user = $this->getUser();
+        if ($user !== $question->getUser() && !$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MODERATOR')) {
+            throw $this->createAccessDeniedException('Non autorisé.');
+        }
+        */
         $form = $this->createForm(QuestionType::class, $question);
 
         $form->handleRequest($request);
