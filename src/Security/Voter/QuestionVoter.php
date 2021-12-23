@@ -19,7 +19,7 @@ class QuestionVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, ['edit'])
+        return in_array($attribute, ['edit', 'answer_validate'])
             && $subject instanceof \App\Entity\Question;
     }
 
@@ -34,11 +34,21 @@ class QuestionVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case 'edit':
-                return $user === $subject->getUser() || $this->security->isGranted('ROLE_ADMIN') || $this->security->isGranted('ROLE_MODERATOR');
+
+                // Les MODERATOR (et ADMIN par hiérarchie cf security.yaml) ont le droit aussi
+                if ($this->security->isGranted('ROLE_MODERATOR')) {
+                    return true;
+                }
+
+                // On autorise si le User connecté est l'auteur de la question
+                return $user === $subject->getUser();
+
                 break;
-            case 'POST_VIEW':
-                // logic to determine if the user can VIEW
-                // return true or false
+                case 'answer_validate':
+                    // On autorise si le User connecté est l'auteur de la question
+                    if ($user === $subject->getUser()) {
+                        return true;
+                    }
                 break;
         }
 

@@ -12,8 +12,9 @@
     <p><a href="{{ path('admin_question_toggle', {'id': question.id}) }}" class="btn btn-warning">{{ btnLabel }}</a></p>
 {% endif %}
 
+{% if is_granted('edit', question) %}
 <p class="mt-3"><a class="btn btn-success" href="{{ path('question_edit', {id: question.id}) }}">Modifier</a></p>
-
+{% endif %}
 <hr>
 
 <h3>{{ question.answers|length }} Réponse(s)</h3>
@@ -27,8 +28,9 @@
         {{ answer.body }}
     </div>
     <div>
+        {% if is_granted('answer_validate', question) %}
         <a href="{{ path('answer_validate', {'id': answer.id}) }}" class="btn btn-sm btn-success">Accepter cette réponse</a>
-
+        {% endif %}
         {% if is_granted('ROLE_MODERATOR') %}
             {% set btnLabel = answer.isBlocked ? 'Débloquer cette réponse' : 'Bloquer cette réponse' %}
             <a href="{{ path('admin_answer_toggle', {'id': answer.id}) }}" class="btn btn-sm btn-warning mr-2">{{ btnLabel }}</a>
