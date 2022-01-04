@@ -75,7 +75,7 @@ class QuestionController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $question->getActive() == 1) {
 
             // $answer = $form->getData();
             // On associe Réponse
@@ -96,6 +96,8 @@ class QuestionController extends AbstractController
             $this->addFlash('success', 'Réponse ajoutée');
 
             return $this->redirectToRoute('question_show', ['id' => $question->getId()]);
+        } elseif($question->getActive() == 0) {
+            $this->addFlash('danger', 'Question fermée');
         }
 
         // Réponses non bloquées
