@@ -165,7 +165,7 @@ class QuestionController extends AbstractController
             return $this->redirectToRoute('question_show', ['id' => $question->getId()]);
         }
 
-        return $this->render('question/edit.html.twig', [
+        return $this->render('question/edit.html.twig', [   
             'form' => $form->createView(),
         ]);
     }
