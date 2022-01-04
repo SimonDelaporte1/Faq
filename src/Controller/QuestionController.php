@@ -11,6 +11,7 @@ use App\Form\QuestionType;
 use App\Repository\AnswerRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\UserRepository;
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -86,6 +87,11 @@ class QuestionController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($answer);
             $entityManager->flush();
+            $question->setUpdatedAt(new DateTime());
+
+            $entityManager->persist($question);
+            $entityManager->flush();
+
 
             $this->addFlash('success', 'Réponse ajoutée');
 
