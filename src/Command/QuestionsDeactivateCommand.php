@@ -30,17 +30,23 @@ class QuestionsDeactivateCommand extends Command
 
     protected function configure(): void
     {
-        //
+        $this
+            ->addArgument('nbJour', InputArgument::OPTIONAL, 'Ancienneté de la dernière réponse')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
-        
-        $io->info('Mise à jour des dates');
+        $nbJour = $input->getArgument('nbJour');
+        if (empty($nbJour)) {
+            $nbJour = 7;
+        }
 
-        $this->questionRepository->updateActivatedAd();
+        $io->info('Mise à jour des dates : ' . $nbJour );
+
+        $this->questionRepository->updateActivatedAd($nbJour);
 
         $io->success('Mise à jour des dates effectuée');
 

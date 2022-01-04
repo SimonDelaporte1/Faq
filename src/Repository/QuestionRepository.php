@@ -30,13 +30,13 @@ class QuestionRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function updateActivatedAd()
+    public function updateActivatedAd($nbJour)
     {
         $conn = $this->getEntityManager()->getConnection();
         $sql = '
             UPDATE question q
             SET q.active = 0
-            WHERE q.updated_at < DATE_ADD(NOW(), INTERVAL -7 DAY)';
+            WHERE q.updated_at < DATE_ADD(NOW(), INTERVAL -'.intval($nbJour).' DAY)';
         $stmt = $conn->prepare($sql);
         $stmt->executeQuery();
     }
