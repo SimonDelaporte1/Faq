@@ -83,13 +83,10 @@ class QuestionController extends AbstractController
 
             // On associe le user connecté à la réponse
             $answer->setUser($this->getUser());
+            $question->setUpdatedAt(new DateTime());
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($answer);
-            $entityManager->flush();
-            $question->setUpdatedAt(new DateTime());
-
-            $entityManager->persist($question);
             $entityManager->flush();
 
 

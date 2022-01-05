@@ -46,9 +46,9 @@ class QuestionsDeactivateCommand extends Command
 
         $io->info('Mise à jour des dates : ' . $nbJour );
 
-        $this->questionRepository->updateActivatedAd($nbJour);
+        $nbAffectedRows = $this->questionRepository->updateActivatedAd($nbJour);
 
-        $io->success('Mise à jour des dates effectuée');
+        $io->success($nbAffectedRows.' question(s) ont été traitées.');
 
         return Command::SUCCESS;
     }
