@@ -10,6 +10,9 @@
         <span class="badge badge-{{ question.isSolved ? 'success' : 'warning' }}">
             {{ question.isSolved ? 'Résolue' : 'En attente' }}
         </span>
+        {% if not question.isActive %}
+        <span class="badge badge-danger">Inactive</span>
+        {% endif %}
     </h2>
 
     <p class="small-grey-text">
