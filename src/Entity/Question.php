@@ -75,7 +75,7 @@ class Question
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $active;
 
@@ -262,5 +262,10 @@ class Question
         $this->active = $active;
 
         return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->active;
     }
 }
