@@ -194,5 +194,4 @@ class QuestionController extends AbstractController
 
         return $this->redirectToRoute('question_show', ['id' => $question->getId()]);
     }
-
 }

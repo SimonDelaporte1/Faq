@@ -48,5 +48,4 @@ class AnswerController extends AbstractController
 
         return $this->redirectToRoute('question_show', ['id' => $answer->getQuestion()->getId()]);
     }
-
 }
